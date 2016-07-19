@@ -1,3 +1,4 @@
+/* Full IML use of R from SAS */
 proc iml;
 
 /* Send the SAS help data set iris to R as SASIris */
@@ -16,18 +17,17 @@ submit / R;
 	ggsave("w:\\IrisResid.png")
 endsubmit;
 
+/* Bring R results back to SAS */
 run ImportDataSetFromR("Work.SASIrisDiag","SASIris.Diag");
-
 use Work.SASIrisDiag;
 show contents;
 close Work.SASIrisDiag;
-
 proc sgplot
-	data=Work.SASIrisDiag
-	description="Iris model from R - diagnostics";
-scatter 
-	x = SepalWidth
-	y = _resid;
+    data=Work.SASIrisDiag
+    description="Iris model from R - diagnostics";
+    scatter 
+        x = SepalWidth
+        y = _resid;
 run;
 	
 
